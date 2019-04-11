@@ -24,15 +24,15 @@ public class PickUpAndDrop : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetAxis("Fire1") > 0 && !isHeld)
+        if (Input.GetAxis("Fire2") > 0 && !isHeld)
         {
             PickUpCow();
         }
-        if (Input.GetAxis("Fire1") < 1 && isHeld)
+        if (Input.GetAxis("Fire2") < 1 && isHeld)
         {
             DropCow();
         }
-        if (Input.GetAxis("Fire2") > 0 && !isHeld)
+        if (Input.GetAxis("Fire1") > 0 && !isHeld)
         {
             SquishCow();
             time = 0;
@@ -86,6 +86,13 @@ public class PickUpAndDrop : MonoBehaviour
 
             if (hit.collider.tag == "Cow")
             {
+                if(hit.collider.GetComponent<CowGrow>().GetGrown()
+                    && !hit.collider.GetComponent<CowMove>().isInfected)
+                {
+                    Destroy(hit.collider.gameObject);
+                    GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().score += 10;
+                }
+
                 squishObject = hit.collider.gameObject;
 
 

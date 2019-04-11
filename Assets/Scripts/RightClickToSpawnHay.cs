@@ -28,15 +28,6 @@ public class RightClickToSpawnHay : MonoBehaviour {
                     GameObject newCow = Instantiate(hayBale, hit.point, Quaternion.Euler(0,0,0));
                     newCow.transform.SetParent(planet.transform);
                 }
-                if (hit.collider.tag == "Cow")
-                {
-                    if (hit.collider.GetComponent<CowGrow>().GetGrown()
-                        && !hit.collider.GetComponent<CowMove>().isInfected)
-                    {
-                        Destroy(hit.collider.gameObject);
-                        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().score += 10;
-                    }
-                }
             }
         }
         if(Input.GetAxis("Fire2") == 0)

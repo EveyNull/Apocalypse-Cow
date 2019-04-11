@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114111630224584192}
   - component: {fileID: 114013537963733754}
   - component: {fileID: 114124369891179914}
+  - component: {fileID: 114269627477896678}
   m_Layer: 0
   m_Name: CowBlW
   m_TagString: Cow
@@ -41,7 +42,7 @@ Transform:
   m_GameObject: {fileID: 1886753522288938}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -62,6 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: b83d3bf75db8f704fb67e55cf64a537f, type: 2}
+  - {fileID: 2100000, guid: 21c7b3accdb94bd43ab5469246f22a5e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -115,6 +117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeDirectionFrequency: 5
+  isInfected: 0
+  speed: 1
 --- !u!114 &114111630224584192
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -137,6 +141,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca42a6a37866cf74ba57fb372a841efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114269627477896678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1886753522288938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ef139c78df48540983f0cbff5a3ea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSquished: 0
 --- !u!136 &136180387852963890
 CapsuleCollider:
   m_ObjectHideFlags: 1

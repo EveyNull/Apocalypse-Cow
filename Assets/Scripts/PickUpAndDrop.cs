@@ -6,9 +6,14 @@ public class PickUpAndDrop : MonoBehaviour
 {
 
     public float speed = 10f;
+    public ParticleSystem squish;
 
     private bool isHeld;
+    private bool isSquished;
     private GameObject heldObject;
+    private GameObject squishObject;
+
+    private float time = 0;
 
     // Use this for initialization
     void Start()
@@ -27,6 +32,11 @@ public class PickUpAndDrop : MonoBehaviour
         {
             DropCow();
         }
+        if (Input.GetAxis("Fire2") > 0 && !isHeld)
+        {
+            SquishCow();
+            time = 0;
+        }
         if (isHeld)
         {
             MoveObject();
@@ -41,9 +51,12 @@ public class PickUpAndDrop : MonoBehaviour
         {
             if (hit.collider.tag == "Cow")
             {
-                heldObject = hit.collider.gameObject;
-                heldObject.layer = 2;
-                isHeld = true;
+                if (!hit.collider.GetComponent<CowMove>().isInfected)
+                {
+                    heldObject = hit.collider.gameObject;
+                    heldObject.layer = 2;
+                    isHeld = true;
+                }
             }
         }
     }
@@ -61,6 +74,34 @@ public class PickUpAndDrop : MonoBehaviour
         heldObject.layer = 0;
         heldObject = null;
         isHeld = false;
+    }
+
+    void SquishCow()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+
+            if (hit.collider.tag == "Cow")
+            {
+                squishObject = hit.collider.gameObject;
+
+
+                if (!(squishObject.GetComponent<SquishCheck>().isSquished))
+                {
+                    squishObject.GetComponent<CowMove>().enabled = false;
+                    Rigidbody rb = squishObject.GetComponent<Rigidbody>();
+                    rb.isKinematic = true;
+                    Destroy((Instantiate(squish, squishObject.transform.position, squishObject.transform.rotation)).gameObject, 1f);
+                    squishObject.transform.localScale -= new Vector3(-0.03f, 0.04f, -0.03f);
+                    squishObject.GetComponent<SquishCheck>().isSquished = true;
+                    time += Time.deltaTime;
+                }
+                Destroy(squishObject, 1f);
+            }
+        }
     }
 
     public bool GetHeld()

@@ -8,19 +8,24 @@ public class MoveForwardsAndInfect : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        gameObject.GetComponent<CowMove>().isInfected = true;
+        gameObject.GetComponent<CowMove>().speed = 0.5f;
+        gameObject.GetComponent<Renderer>().materials[1].color = Color.red;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        float step = Time.deltaTime * 6;
-        transform.position = Vector3.MoveTowards(transform.position, otherCow.transform.position, step);
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        other.GetComponent<Renderer>().material = gameObject.GetComponent<Renderer>().materials[1];
+        if(collision.collider.tag == "Cow"
+            && !collision.collider.GetComponent<CowMove>().isInfected)
+        {
+            
+            collision.collider.gameObject.AddComponent<MoveForwardsAndInfect>();
+        }
     }
 }

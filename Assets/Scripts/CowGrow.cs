@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CowGrow : MonoBehaviour {
-
-    private bool grown = false;
+    
+    private bool isGrown = false;
 
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.collider.tag == "Hay")
         {
             Destroy(collision.collider.gameObject);
-            transform.localScale = transform.localScale * 2;
+            if (!isGrown && !GetComponent<CowMove>().isInfected)
+            {
+                isGrown = true;
+                transform.localScale = transform.localScale * 2;
+            }
         }
     }
 
-    bool GetGrown()
+    public bool GetGrown()
     {
-        return grown;
+        return isGrown;
     }
 }
